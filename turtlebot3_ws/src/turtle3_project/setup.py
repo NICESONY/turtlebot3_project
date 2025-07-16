@@ -53,6 +53,7 @@ setup(
             'turtlebot3_robot_code = turtle3_project.turtlebot3_robot_code:main',
             'turtlebot3_robot_video = turtle3_project.turtlebot3_robot_video:main',
             'turtlebot3_sim_video = turtle3_project.turtlebot3_sim_video:main',
+            'logic_flow = turtle3_project.logic_flow:main',
         ],
     },
 )
