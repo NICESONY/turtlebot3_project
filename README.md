@@ -7,7 +7,7 @@
 - open terminer
 - mkdir project
 - cd project
-- git clone https://NICESONY:tokenkey@github.com/NICESONY/turtlebot3_project.git
+- git clone https://NICESONY:{tokenkey}@github.com/NICESONY/turtlebot3_project.git
 - code .
 - 
 
