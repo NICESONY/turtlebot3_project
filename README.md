@@ -9,7 +9,17 @@
 - cd project
 - git clone https://NICESONY:{tokenkey}@github.com/NICESONY/turtlebot3_project.git
 - code .
-- 
+
+
+sudo apt update
+sudo apt install \
+  ros-humble-nav2-bringup \
+  ros-humble-navigation2 \
+  ros-humble-nav2-amcl \
+  ros-humble-nav2-lifecycle-manager \
+  ros-humble-nav2-planner \
+  ros-humble-nav2-controller \
+  ros-humble-nav2-behavior-tree
 
 ## Project Notion link
 - 
