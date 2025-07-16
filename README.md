@@ -4,7 +4,7 @@
 
 ## make git clone
 
-- open turminer
+- open terminer
 - mkdir project
 - cd project
 - git clone https://NICESONY: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@github.com/NICESONY/turtlebot3_project.git
