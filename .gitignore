@@ -207,6 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 
-./turtlebot3_project/turtlebot3_ws/build/
-./turtlebot3_project/turtlebot3_ws/install/
-./turtlebot3_project/turtlebot3_ws/log/
+turtlebot3_ws/build/
+turtlebot3_ws/install/
+turtlebot3_ws/log/
+
