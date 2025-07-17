@@ -23,6 +23,25 @@ sudo apt install \
   ros-humble-nav2-controller \
   ros-humble-nav2-behavior-tree
 ```
+
+## git commad
+
+```
+### 처음에는 항상 상대방의 수정사항을 먼저 받아줘야합니다.
+
+```
+git pull
+```
+
+### 내가 수정한 것을 깃 원격 즉 웹상에 올리고 싶을때
+
+```
+git add .
+git commit -m "update"
+git push
+```
+
+```
 ## Project Notion link
 - 
 
