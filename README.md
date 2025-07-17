@@ -26,7 +26,7 @@ sudo apt install \
 
 ## git commad
 
-```
+
 ### 처음에는 항상 상대방의 수정사항을 먼저 받아줘야합니다.
 
 ```
@@ -41,7 +41,7 @@ git commit -m "update"
 git push
 ```
 
-```
+
 ## Project Notion link
 - 
 
