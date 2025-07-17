@@ -10,7 +10,7 @@
 - git clone https://NICESONY:{tokenkey}@github.com/NICESONY/turtlebot3_project.git
 - code .
 
-
+```
 sudo apt update
 sudo apt install \
   ros-humble-nav2-bringup \
@@ -20,7 +20,7 @@ sudo apt install \
   ros-humble-nav2-planner \
   ros-humble-nav2-controller \
   ros-humble-nav2-behavior-tree
-
+```
 ## Project Notion link
 - 
 
