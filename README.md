@@ -6,14 +6,7 @@
 - [계획서](https://docs.google.com/document/d/1M6PhMZ9piBhJVs8vatvDK25QiM19CuVPqjAv2bpU3-8/edit?tab=t.0)
 - [PPT](https://docs.google.com/presentation/d/1NAYQ3nXiv2y0jL_QtZ-ypov38d0UsTY2KapHy4Q52Sg/edit?slide=id.g370cc601211_0_15#slide=id.g370cc601211_0_15)
 
--------------------------------
-## 오전
 
-
-
-
-## 오후
--------------------------------
 ## make git branch jin
 
 ## change main 
