@@ -2,6 +2,10 @@
 
 ## 잘 부탁 드립니다. 해당 깃허브 레파지토리에 오신 것을 환영합니다!!
 
+- [https://docs.google.com/presentation/d/1j1xKGVV8NkETSxIdAJgCO2qdbaPO2zO-178N694P2_A/edit?slide=id.g36f529a8a23_0_5#slide=id.g36f529a8a23_0_5](프로젝트 링크)
+- [https://docs.google.com/document/d/1M6PhMZ9piBhJVs8vatvDK25QiM19CuVPqjAv2bpU3-8/edit?tab=t.0](계획서)
+- [https://docs.google.com/presentation/d/1NAYQ3nXiv2y0jL_QtZ-ypov38d0UsTY2KapHy4Q52Sg/edit?slide=id.g370cc601211_0_15#slide=id.g370cc601211_0_15](PPT)
+
 -------------------------------
 ## 오전
 
