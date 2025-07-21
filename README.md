@@ -6,7 +6,7 @@
 - [계획서](https://docs.google.com/document/d/1M6PhMZ9piBhJVs8vatvDK25QiM19CuVPqjAv2bpU3-8/edit?tab=t.0)
 - [PPT](https://docs.google.com/presentation/d/1NAYQ3nXiv2y0jL_QtZ-ypov38d0UsTY2KapHy4Q52Sg/edit?slide=id.g370cc601211_0_15#slide=id.g370cc601211_0_15)
 
-### 슬랙을 초대해서 강사님께 질문 및 서로 질문 공유 
+### 슬랙을 초대해서 강사님께 질문 및 서로 질문 공유 : 
 
 ## make git branch jin
 
