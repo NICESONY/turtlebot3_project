@@ -84,6 +84,12 @@ sudo apt install \
   ros-humble-nav2-planner \
   ros-humble-nav2-controller \
   ros-humble-nav2-behavior-tree
+
+
+sudo apt update
+sudo apt install ros-humble-cartographer ros-humble-cartographer-ros
+
+
 ```
 
 ## git commad
