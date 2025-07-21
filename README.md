@@ -9,11 +9,11 @@
 
 ## make git branch jin
 
-## change main 
 ```
 ## make git clone
 
 - open terminer
+- cd ~
 - mkdir project
 - cd project
 - git clone https://NICESONY:{tokenkey}@github.com/NICESONY/turtlebot3_project.git
