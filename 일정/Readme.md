@@ -1,3 +1,11 @@
+## 최종 산출물
+
+- 계획서
+- PPT
+- 시연영상
+
+---------
+
 0. github pull 먼저하고 push 하는 법 알려드리기 + git brach 만들고 병합 진행하기
 1. branch 만들어서 진행하는 것 test 해보기
 2. pull request
