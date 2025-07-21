@@ -1,16 +1,32 @@
 # turtlebot3 Project
 
-## 잘 부탁 드립니다. 해당 깃허브 레파지토리에 오신 것을 환영합니다!!
+
+
+## 🗓️ 프로젝트 기간 : 2025/07/21 ~ 2025/07/25
+
+## 🎯 주제 :
+
+## 👥 팀구성 : 손건희, 박현준, 박진우, 곽정미
+
+## 📅 프로젝트 일정
+
+날짜 조원 시간 작업내용
+
+|날짜|조원|시간|작업 내용|
+|:---:|:---:|:---:|:---:|
+|2025/07/21 |모두 참여|주제 정하기, github 세팅, 계획서 작성 중, PPT 작성 중|
+|왼쪽정렬|오른쪽정렬|중앙정렬|
+|왼쪽정렬|오른쪽정렬|중앙정렬|
+
+```
 
 - [프로젝트 링크](https://docs.google.com/presentation/d/1j1xKGVV8NkETSxIdAJgCO2qdbaPO2zO-178N694P2_A/edit?slide=id.g36f529a8a23_0_5#slide=id.g36f529a8a23_0_5)
 - [계획서](https://docs.google.com/document/d/1M6PhMZ9piBhJVs8vatvDK25QiM19CuVPqjAv2bpU3-8/edit?tab=t.0)
 - [PPT](https://docs.google.com/presentation/d/1NAYQ3nXiv2y0jL_QtZ-ypov38d0UsTY2KapHy4Q52Sg/edit?slide=id.g370cc601211_0_15#slide=id.g370cc601211_0_15)
 
-### 슬랙을 초대해서 강사님께 질문 및 서로 질문 공유 : 
 
-## make git branch jin
 
-```
+
 ## make git clone
 
 - open terminer
