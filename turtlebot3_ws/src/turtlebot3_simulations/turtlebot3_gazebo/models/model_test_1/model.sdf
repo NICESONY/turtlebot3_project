@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="test_m">
+    <static>true</static>
+    <link name="full_mesh">
+    <pose>0 0 0 1.5708 0 0</pose>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://model_test_1/meshes/model_test_1.stl</uri>
+            <scale>0.01 0.01 0.01</scale>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://model_test_1/meshes/model_test_1.stl</uri>
+            <scale>0.01 0.01 0.01</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

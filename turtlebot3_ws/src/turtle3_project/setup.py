@@ -54,7 +54,7 @@ setup(
             'turtlebot3_robot_video = turtle3_project.turtlebot3_robot_video:main',
             'turtlebot3_sim_video = turtle3_project.turtlebot3_sim_video:main',
             'logic_flow = turtle3_project.logic_flow:main',
-            'Smart_Farm_Manager = turtle3_project.smart_farm_manager:main',
+            'smart_farm_manager = turtle3_project.smart_farm_manager:main',
             
         ],
     },

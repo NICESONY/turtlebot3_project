@@ -8,13 +8,13 @@ PatrolNode for ROS 2 Humble
 """
 
 """
-termianl commad
+terminal command
 
-ros2 launch turtlebot3_gazebo turtlebot3_home2.launch.py use_sim_time:=True
+ros2 launch turtlebot3_gazebo smart_farm_model.launch.py
 
-ros2 launch turtlebot3_navigation2 navigation2_home2.launch.py
+ros2 launch turtlebot3_navigation2 smart_farm_navigation2.launch.py use_sim_time:=true
 
-ros2 run turtlebot3_controller patrol_manager_home2
+ros2 run turtle3_project smart_farm_manager
 
 
 debugging code
@@ -43,25 +43,20 @@ from action_msgs.msg import GoalStatus
 
 #  원하는 Waypoint 리스트 
 WAYPOINTS = [
-    {'x':  1.55, 'y': -0.07, 'yaw_deg': 0}, # 1
-    {'x': -0.87, 'y': -1.55, 'yaw_deg': 0}, # 2
-    {'x': -2.87, 'y': -1.70, 'yaw_deg': 0}, # 4
-    {'x': -0.87, 'y': -1.55, 'yaw_deg': 0}, # 2
-    {'x': -1.18, 'y': -0.38, 'yaw_deg': 0}, # 7
-    {'x': -2.66, 'y': -0.16, 'yaw_deg': 0}, # 8
-    {'x': -1.18, 'y': -0.38, 'yaw_deg': 0}, # 7
-    {'x': -0.87, 'y': -1.55, 'yaw_deg': 0}, # 2
-    {'x':  1.66, 'y': -1.60, 'yaw_deg': 0}, # 9
-    {'x':  1.67, 'y': -3.04, 'yaw_deg': 0}, # 10
-    {'x': -2.84, 'y': -3.00, 'yaw_deg': 0}, # 11
-    {'x':  1.67, 'y': -3.04, 'yaw_deg': 0}, # 10
-    {'x':  1.66, 'y': -1.60, 'yaw_deg': 0}, # 9
-    {'x':  0.26, 'y': -1.53, 'yaw_deg': 0}, # 9
+    {'x': -1.26, 'y': -1.27, 'yaw_deg': 0},
+    {'x': -1.31, 'y': -3.29, 'yaw_deg': 0},
+    {'x': -1.47, 'y': -5.47, 'yaw_deg': 0},
+    {'x':  1.66, 'y': -5.40, 'yaw_deg': 0},
+    {'x':  1.61, 'y': -3.32, 'yaw_deg': 0},
+    {'x':  1.44, 'y': -1.32, 'yaw_deg': 0},
+    {'x':  3.26, 'y': -6.72, 'yaw_deg': 0},
+    {'x':  4.06, 'y': -3.44, 'yaw_deg': 0},
 ]
+
 # 
 #  AMCL 초기 위치 (하드코딩) 
-INIT_X   = 0.10     # [m]
-INIT_Y   = 0.00     # [m]
+INIT_X   = 0.0     # [m]
+INIT_Y   = 0.0     # [m]
 INIT_YAW = 0.0      # [rad]
 # 
 
@@ -81,7 +76,7 @@ class PatrolNode(Node):
         self.init_pub = self.create_publisher(
             PoseWithCovarianceStamped, '/initialpose', 10)
         self.once_timer = self.create_timer(
-            0.5, self.publish_initial_pose)
+            1.0, self.publish_initial_pose)
 
         # ② Nav2 액션 클라이언트
         self.nav_client = ActionClient(self, NavigateToPose,
