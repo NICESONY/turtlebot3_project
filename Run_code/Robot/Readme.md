@@ -50,4 +50,6 @@ ros2 launch turtlebot3_bringup turtlebot3_state_publisher.launch.py
 ros2 launch turtlebot3_navigation2 navigation2.launch.py 
 ros2 run turtlebot3_teleop teleop_keyboard 
 
+ros2 run nav2_map_server map_saver_cli -f ~/map
+
 ```
