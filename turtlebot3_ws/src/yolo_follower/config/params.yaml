@@ -17,7 +17,7 @@ yolo_follower:
     yaw_deadband_px: 60
     v_min: 0.08
     stop_area: 0.9
-    max_lin_vel: 0.3
+    max_lin_vel: 0.5
     max_ang_vel: 0.05
     search_ang_vel: 0.2
     max_lost: 50
