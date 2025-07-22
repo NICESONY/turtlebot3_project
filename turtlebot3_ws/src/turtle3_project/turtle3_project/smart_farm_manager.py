@@ -157,7 +157,7 @@ class PatrolNode(Node):
     #  액션 서버 응답 
     def goal_resp_cb(self, future):
         goal_handle = future.result()
-        if not goal_handle.accepted:
+        if not goal_handle.accepted :
             self.get_logger().error('Goal 거부')
             self.goal_active = False
             return
@@ -174,6 +174,9 @@ class PatrolNode(Node):
 
         self.wp_idx = (self.wp_idx + 1) % len(WAYPOINTS)  # 다음 포인트
         self.goal_active = False
+        cnt = 0
+        if cnt == len(WAYPOINTS):
+            self.goal_active = True
 
 
 def main():
