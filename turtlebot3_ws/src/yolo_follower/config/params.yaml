@@ -1,0 +1,19 @@
+yolo_follower:
+  ros__parameters:
+    model_path: "yolov8n.pt"        # 패키지 내부 상대경로 or 절대경로
+    target_class: "person"
+    conf_thres: 0.5
+    iou_thres: 0.45
+
+    # 제어 파라미터
+    k_yaw: 0.005
+    k_dist: 0.002
+    target_area: 0.15
+    max_lin_vel: 0.25
+    max_ang_vel: 1.0
+    search_ang_vel: 0.2
+
+    # 토픽 이름(필요 시 변경)
+    image_topic: "/camera/image_raw"
+    cmd_vel_topic: "/cmd_vel"
+    bbox_topic: "/yolo_follower/bboxes"  # detector→follower 사이 pub/sub

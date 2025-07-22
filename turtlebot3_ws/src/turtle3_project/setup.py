@@ -55,6 +55,7 @@ setup(
             'turtlebot3_sim_video = turtle3_project.turtlebot3_sim_video:main',
             'logic_flow = turtle3_project.logic_flow:main',
             'smart_farm_manager = turtle3_project.smart_farm_manager:main',
+            'follow_yolo_node = turtle3_project.follow_yolo_node:main',
             
         ],
     },
