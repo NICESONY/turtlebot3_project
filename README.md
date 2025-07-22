@@ -130,7 +130,6 @@ sudo apt install ros-humble-cartographer ros-humble-cartographer-ros
 
 ```
 git pull
-
 ```
 
 ### 내가 수정한 것을 깃 원격 즉 웹상에 올리고 싶을때
