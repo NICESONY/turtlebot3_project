@@ -156,3 +156,5 @@ git push
 - 먼저 터틀봇 연결 확인을 위해서 모니터와 모니터를 연결할 수 있는 HTMI 포트가 필요함 + 이것을 이용해서 같은 네트워크에 연결해서 로봇에 접속하고자 함
 - hi
 - hi 2
+
+<img width="308" height="320" alt="image" src="https://github.com/user-attachments/assets/8261d4a1-8792-4b70-b1a9-9ddb5c0ddfe5" />
