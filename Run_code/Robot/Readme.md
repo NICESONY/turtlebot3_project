@@ -1,6 +1,6 @@
 
 
-## go ssh
+## run ssh
 
 ```
 - ros2 launch turtlebot3_bringup robot.launch.py
@@ -8,9 +8,10 @@
 ```
 
 
-##  go computer 
+##  run computer 
 
 ```
--ros2 launch turtlebot3_navigation2 navigation2_home2.launch.py
-- ros2 run turtlebot3_controller patrol_manager_home2
+ros2 launch turtlebot3_navigation2 smart_farm_navigation2.launch.py 
+ros2 run turtle3_project smart_farm_manager
 
+```
