@@ -32,16 +32,25 @@ pose:
 
 
 
+"""
+Patrol + Low-battery docking (ROS 2 Humble)
+- Subscribe:  /battery_state (sensor_msgs/BatteryState)
+- Publish:    /battery_low   (std_msgs/Bool)
+- Action:     nav2_msgs/action/NavigateToPose
+- AMCL init:  publish /initialpose once
+"""
+
 import math
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
-from geometry_msgs.msg import (
-    PoseStamped, PoseWithCovarianceStamped, Quaternion)
+from geometry_msgs.msg import PoseStamped, PoseWithCovarianceStamped, Quaternion
+from sensor_msgs.msg import BatteryState
+from std_msgs.msg import Bool
 from nav2_msgs.action import NavigateToPose
 from action_msgs.msg import GoalStatus
 
-#  원하는 Waypoint 리스트 
+# ---------------- Params ----------------
 WAYPOINTS = [
     {'x': -1.26, 'y': -1.27, 'yaw_deg': 0},
     {'x': -1.31, 'y': -3.29, 'yaw_deg': 0},
@@ -53,92 +62,109 @@ WAYPOINTS = [
     {'x':  4.06, 'y': -3.44, 'yaw_deg': 0},
 ]
 
-# 
-#  AMCL 초기 위치 (하드코딩) 
-INIT_X   = 0.0     # [m]
-INIT_Y   = 0.0     # [m]
-INIT_YAW = 0.0      # [rad]
-# 
+DOCK_POSE = {'x': 0.0, 'y': 0.0, 'yaw_deg': 180}   # 충전 스테이션 위치
+LOW_BATT_PCT = 30.0                               # 임계 퍼센트(%)
+
+INIT_X, INIT_Y, INIT_YAW = 0.0, 0.0, 0.0           # 초기 AMCL pose
+
+# ----------------------------------------
+
 
 def quat_from_yaw(yaw_rad: float) -> Quaternion:
-    """yaw(rad) → Quaternion(z, w 값만 사용)"""
     return Quaternion(
         x=0.0, y=0.0,
         z=math.sin(yaw_rad / 2.0),
         w=math.cos(yaw_rad / 2.0)
     )
 
+
 class PatrolNode(Node):
     def __init__(self):
         super().__init__('patrol_node')
 
-        # ① 초기 pose 퍼블리셔 (0.5 s 뒤 한 번만 호출)
+        # --- Publishers / Subscribers ---
         self.init_pub = self.create_publisher(
             PoseWithCovarianceStamped, '/initialpose', 10)
-        self.once_timer = self.create_timer(
-            1.0, self.publish_initial_pose)
+        self.low_battery_pub = self.create_publisher(Bool, '/battery_low', 10)
 
-        # ② Nav2 액션 클라이언트
-        self.nav_client = ActionClient(self, NavigateToPose,
-                                       'navigate_to_pose')
+        self.create_subscription(
+            PoseWithCovarianceStamped, '/amcl_pose', self.pose_cb, 10)
+        self.create_subscription(
+            BatteryState, '/battery_state', self.batt_cb, 10)
+
+        # --- Timers ---
+        self.once_timer = self.create_timer(1.0, self.publish_initial_pose)
+        self.main_timer = self.create_timer(0.5, self.main_loop)
+
+        # --- Action Client ---
+        self.nav_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
         self.get_logger().info('Nav2 action 서버 대기 중…')
         self.nav_client.wait_for_server()
         self.get_logger().info('Nav2 action 서버 연결 완료')
 
-        # ③ AMCL pose 구독
+        # --- States ---
         self.current_pose = None
-        self.create_subscription(
-            PoseWithCovarianceStamped,
-            '/amcl_pose',
-            self.pose_cb,
-            10)
-
-        # 순찰 상태 변수
         self.wp_idx = 0
         self.goal_active = False
 
-        # 0.5 s 주기 메인 루프
-        self.create_timer(0.5, self.main_loop)
+        self.batt_pct = 100.0
+        self.low_batt_sent = False
 
-    #  초기 pose 발행 후 타이머 취소 
+    # -------- callbacks --------
     def publish_initial_pose(self):
         msg = PoseWithCovarianceStamped()
         msg.header.frame_id = 'map'
         msg.header.stamp = self.get_clock().now().to_msg()
-
         msg.pose.pose.position.x = INIT_X
         msg.pose.pose.position.y = INIT_Y
         msg.pose.pose.orientation = quat_from_yaw(INIT_YAW)
+        msg.pose.covariance[0] = msg.pose.covariance[7] = 0.25 ** 2
+        msg.pose.covariance[35] = math.radians(10) ** 2
 
-        # 공분산: ±0.25 m, ±10°
-        msg.pose.covariance[0]  = msg.pose.covariance[7] = 0.25**2
-        msg.pose.covariance[35] = math.radians(10)**2
-
-        # 두 번 발행(유실 대비)
         for _ in range(2):
             self.init_pub.publish(msg)
 
         self.get_logger().info('📍 초기 pose 발행 완료')
-        self.once_timer.cancel()          # 더 이상 필요 없는 타이머 중지
+        self.once_timer.cancel()
 
-    #  AMCL pose 콜백 
     def pose_cb(self, msg: PoseWithCovarianceStamped):
         self.current_pose = msg.pose.pose
 
-    #  메인 루프 
+    def batt_cb(self, msg: BatteryState):
+        pct = msg.percentage
+        # 어떤 드라이버는 0~1.0 범위로 주기도 함 -> 보정
+        self.batt_pct = pct if pct > 1.0 else pct * 100.0
+
     def main_loop(self):
+        # 아직 pose 못 받았거나 goal 진행 중이면 skip
         if self.goal_active or self.current_pose is None:
             return
-        self.send_wp_goal()
 
-    #  목표 전송 
+        # 배터리 체크
+        if (self.batt_pct <= LOW_BATT_PCT) and (not self.low_batt_sent):
+            self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
+            self.low_battery_pub.publish(Bool(data=True))
+            self.low_batt_sent = True
+            self.send_specific_goal(DOCK_POSE)
+            return
+
+        # 평상시 순찰
+        if not self.low_batt_sent:
+            self.send_wp_goal()
+
+    # -------- goal send helpers --------
     def send_wp_goal(self):
         wp = WAYPOINTS[self.wp_idx]
-        yaw_rad = math.radians(wp['yaw_deg'])
+        self._send_goal_common(wp, f"▶ Goal #{self.wp_idx}")
 
+    def send_specific_goal(self, wp_dict):
+        self._send_goal_common(wp_dict, "▶ LowBatt Dock Goal")
+
+    def _send_goal_common(self, wp, log_prefix):
+        yaw_rad = math.radians(wp['yaw_deg'])
         ps = PoseStamped()
         ps.header.frame_id = 'map'
-        ps.header.stamp    = self.get_clock().now().to_msg()
+        ps.header.stamp = self.get_clock().now().to_msg()
         ps.pose.position.x = wp['x']
         ps.pose.position.y = wp['y']
         ps.pose.orientation = quat_from_yaw(yaw_rad)
@@ -147,42 +173,39 @@ class PatrolNode(Node):
         goal_msg.pose = ps
 
         self.get_logger().info(
-            f"▶ Goal #{self.wp_idx}  "
-            f"(x={wp['x']:.2f}, y={wp['y']:.2f}, yaw={wp['yaw_deg']}°)")
+            f"{log_prefix} (x={wp['x']:.2f}, y={wp['y']:.2f}, yaw={wp['yaw_deg']}°)")
         self.goal_active = True
-
         self.nav_client.send_goal_async(goal_msg).add_done_callback(self.goal_resp_cb)
 
-
-    #  액션 서버 응답 
+    # -------- action callbacks --------
     def goal_resp_cb(self, future):
         goal_handle = future.result()
-        if not goal_handle.accepted :
-            self.get_logger().error('Goal 거부')
+        if not goal_handle.accepted:
+            self.get_logger().error('Goal 거부됨')
             self.goal_active = False
             return
         goal_handle.get_result_async().add_done_callback(self.result_cb)
 
-    #  결과 
     def result_cb(self, future):
         status = future.result().status
-        if status == GoalStatus.STATUS_SUCCEEDED :
-            self.get_logger().info(f"✓ Waypoint {self.wp_idx} 도착")
+        if status == GoalStatus.STATUS_SUCCEEDED:
+            self.get_logger().info('✓ Goal 성공')
         else:
-            self.get_logger().warn(
-                f"✗ Waypoint {self.wp_idx} 실패 (status={status})")
+            self.get_logger().warn(f'✗ Goal 실패 (status={status})')
 
-        self.wp_idx = (self.wp_idx + 1) % len(WAYPOINTS)  # 다음 포인트
+        # 순찰 중이었다면 다음 WP로
+        if not self.low_batt_sent:
+            self.wp_idx = (self.wp_idx + 1) % len(WAYPOINTS)
+
+        # 도킹 후에는 정지(필요 시 여기서 충전 완료 이벤트 기다리는 로직 추가 가능)
         self.goal_active = False
-        cnt = 0
-        if cnt == len(WAYPOINTS):
-            self.goal_active = True
 
 
 def main():
     rclpy.init()
     rclpy.spin(PatrolNode())
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
