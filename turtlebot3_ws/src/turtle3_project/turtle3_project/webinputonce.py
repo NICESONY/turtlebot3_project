@@ -7,7 +7,7 @@ from my_custom_msgs.msg import WebInput
 
 '''
 
-ros2 run turtle3_project webinputonce.py -- --x -1.0 --y 2.0 --yaw 90 --id 7 --mod 1
+ros2 run turtle3_project webinputonce.py --x -1.0 --y 2.0 --yaw 90 --id 7 --mod 1
 
 '''
 
