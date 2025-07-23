@@ -1,4 +1,4 @@
-image: /home/samson/project/turtlebot3_project/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.pgm
+image: /home/samson/project/turtlebot3_project/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map0.pgm
 mode: trinary
 resolution: 0.05
 origin: [-2.42, -7.4, 0]
