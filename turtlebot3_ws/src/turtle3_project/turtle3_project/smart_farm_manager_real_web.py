@@ -12,9 +12,9 @@ terminal command
 
 ros2 launch turtlebot3_gazebo smart_farm_model.launch.py
 
-ros2 launch turtlebot3_navigation2 smart_farm_navigation2.launch.py use_sim_time:=true
+ros2 launch turtlebot3_navigation2 smart_farm_navigation2_simul.launch.py use_sim_time:=true
 
-ros2 run turtle3_project smart_farm_manager
+ros2 run turtle3_project smart_farm_manager_simul
 
 
 debugging code
@@ -60,7 +60,7 @@ from geometry_msgs.msg import Twist
 from my_custom_msgs.msg import WebInput, WebOutput   # WebOutput을 "현재 상태 pub" 용도로 사용
 
 # ---------------- Params ----------------
-DOCK_POSE = {'x': 4.10, 'y': -3.48, 'yaw_deg': 180}   # 충전 스테이션 위치
+DOCK_POSE = {'x':  0.69, 'y': -2.26, 'yaw_deg': 180}  # 충전 스테이션 위치
 LOW_BATT_PCT = 30.0                                   # 임계 퍼센트(%)
 
 INIT_X, INIT_Y, INIT_YAW = 0.0, 0.0, 0.0               # 초기 AMCL pose (끄고 싶으면 USE_INIT_POSE=False)

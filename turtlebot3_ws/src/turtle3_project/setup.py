@@ -54,12 +54,16 @@ setup(
             'turtlebot3_robot_video = turtle3_project.turtlebot3_robot_video:main',
             'turtlebot3_sim_video = turtle3_project.turtlebot3_sim_video:main',
             'logic_flow = turtle3_project.logic_flow:main',
-            'smart_farm_manager_real = turtle3_project.smart_farm_manager_real:main',
-            'smart_farm_manager_simul = turtle3_project.smart_farm_manager_simul:main',
+            'smart_farm_manager_real_web = turtle3_project.smart_farm_manager_real_web:main',
+            'smart_farm_manager_simul_web = turtle3_project.smart_farm_manager_simul_web:main',
             'follow_yolo_node = turtle3_project.follow_yolo_node:main',
             'fake_battery = turtle3_project.fake_battery:main',
             'webinputonce = turtle3_project.webinputonce:main',
-            
+            'smart_farm_manager_real_auto_waypoint = turtle3_project.smart_farm_manager_real_auto_waypoint:main',
+            'smart_farm_manager_simul_auto_waypoint = turtle3_project.smart_farm_manager_simul_auto_waypoint:main',
+            'smart_farm_manager_real_web_test = turtle3_project.smart_farm_manager_real_web_test:main',
+            'smart_farm_manager_simul_web_test = turtle3_project.smart_farm_manager_simul_web_test:main',
+
         ],
     },
 )
