@@ -19,7 +19,7 @@ class WebSocketRos2Node(Node):
         self.connected = False
         self.reconnect_delay_seconds = 5
 
-        self.sub_data = self.create_subscription(WebOutput, '/output_data_web', self.publish_message_to_server, 10)
+        self.sub_data = self.create_subscription(WebOutput, '/robot_pose_xyyaw', self.publish_message_to_server, 10)
         self.pub_data = self.create_publisher(WebInput, '/input_data_web', 10)
 
         self.inputdata = WebInput()
