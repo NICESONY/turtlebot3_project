@@ -50,6 +50,10 @@ from std_msgs.msg import Bool
 from nav2_msgs.action import NavigateToPose
 from action_msgs.msg import GoalStatus
 
+
+from my_custom_msgs.msg import WebInput, WebOutput
+
+
 # ---------------- Params ----------------
 WAYPOINTS = [
     {'x': -1.39, 'y': -1.23, 'yaw_deg': 180}, ## 1
@@ -83,6 +87,9 @@ class PatrolNode(Node):
     def __init__(self):
         super().__init__('patrol_node')
 
+        self.sub_data = self.create_subscription(WebInput, '/input_data_web', self.send_wp_goal, 10)
+        print(self.sub_data)
+
         # --- Publishers / Subscribers ---
         self.init_pub = self.create_publisher(
             PoseWithCovarianceStamped, '/initialpose', 10)
@@ -110,6 +117,8 @@ class PatrolNode(Node):
 
         self.batt_pct = 100.0
         self.low_batt_sent = False
+        self.inputdata = WebInput()
+        self.waypoint = []
 
     # -------- callbacks --------
     def publish_initial_pose(self):
@@ -151,30 +160,44 @@ class PatrolNode(Node):
 
         # 평상시 순찰
         if not self.low_batt_sent:
-            self.send_wp_goal()
+            self.inputdata.x = 4.10
+            self.inputdata.y = -3.48
+            self.inputdata.yaw_deg = 180.0
+            self.send_wp_goal(msg= self.inputdata)
 
     # -------- goal send helpers --------
-    def send_wp_goal(self):
-        wp = WAYPOINTS[self.wp_idx]
-        self._send_goal_common(wp, f"▶ Goal #{self.wp_idx}")
+    def send_wp_goal(self, msg):
+        self.inputdata.x = msg.x
+        self.inputdata.y = msg.y
+        self.inputdata.yaw_deg = msg.yaw_deg
+        self.waypoint = [self.inputdata.x , self.inputdata.y, self.inputdata.yaw_deg]
+        # wp = waypoint
+        self._send_goal_common(self.waypoint, f"▶ Goal #{self.waypoint}")
+
+    def callback_inputData(self, msg):
+        self.inputdata.x = msg.x
+        self.inputdata.y = msg.y
+        self.inputdata.yaw_deg = msg.yaw_deg
+        self.get_logger().info(f"x: {self.inputdata.x}, y: {self.inputdata.y}, yaw_deg: {self.inputdata.yaw_deg}, id: {self.inputdata.id}, mod: {self.inputdata.mod}")
+
 
     def send_specific_goal(self, wp_dict):
         self._send_goal_common(wp_dict, "▶ LowBatt Dock Goal")
 
     def _send_goal_common(self, wp, log_prefix):
-        yaw_rad = math.radians(wp['yaw_deg'])
+        yaw_rad = math.radians(wp[2]) # 'yaw_deg'
         ps = PoseStamped()
         ps.header.frame_id = 'map'
         ps.header.stamp = self.get_clock().now().to_msg()
-        ps.pose.position.x = wp['x']
-        ps.pose.position.y = wp['y']
-        ps.pose.orientation = quat_from_yaw(yaw_rad)
+        ps.pose.position.x = wp[0] # 'x'
+        ps.pose.position.y = wp[1] # 'y'
+        ps.pose.orientation = quat_from_yaw(yaw_rad) # 'yaw_deg'
 
         goal_msg = NavigateToPose.Goal()
         goal_msg.pose = ps
 
         self.get_logger().info(
-            f"{log_prefix} (x={wp['x']:.2f}, y={wp['y']:.2f}, yaw={wp['yaw_deg']}°)")
+            f"{log_prefix} (x={wp[0]:.2f}, y={wp[1]:.2f}, yaw={wp[2]}°)")
         self.goal_active = True
         self.nav_client.send_goal_async(goal_msg).add_done_callback(self.goal_resp_cb)
 

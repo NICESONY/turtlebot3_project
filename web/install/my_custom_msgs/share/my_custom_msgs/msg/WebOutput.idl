@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from my_custom_msgs/msg/WebOutput.msg
+// generated code does not contain a copyright notice
+
+
+module my_custom_msgs {
+  module msg {
+    struct WebOutput {
+      float x;
+
+      float y;
+
+      float yaw_deg;
+
+      int32 id;
+
+      int8 mod;
+
+      int32 batt;
+    };
+  };
+};

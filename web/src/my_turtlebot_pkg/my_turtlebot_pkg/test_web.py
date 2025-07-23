@@ -1,14 +1,14 @@
 import rclpy
 from rclpy.node import Node
 import websocket
-import rel
+#import rel
 import json
 import time
 import threading
 
 from my_custom_msgs.msg import WebInput, WebOutput
 
-WEBSOCKET_SERVER_URL = "ws://10.2.11.195:8080/websocket-endpoint"
+WEBSOCKET_SERVER_URL = "ws://192.168.0.102:8080/websocket-endpoint"
 
 class WebSocketRos2Node(Node):
     def __init__(self):
