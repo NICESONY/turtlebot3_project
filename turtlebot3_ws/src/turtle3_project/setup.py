@@ -58,6 +58,7 @@ setup(
             'smart_farm_manager_simul = turtle3_project.smart_farm_manager_simul:main',
             'follow_yolo_node = turtle3_project.follow_yolo_node:main',
             'fake_battery = turtle3_project.fake_battery:main',
+            'webinputonce = turtle3_project.webinputonce:main',
             
         ],
     },
