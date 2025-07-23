@@ -162,3 +162,10 @@ git push
 
 ## [map_image](https://github.com/NICESONY/turtlebot3_project/blob/main/Documentation/map_image/Readme.md)
 
+
+-------------
+
+## 🎯  폴더 설명 
+
+
+- 특정 폴더에 뭐가 들어있는지 설명하는 부분
