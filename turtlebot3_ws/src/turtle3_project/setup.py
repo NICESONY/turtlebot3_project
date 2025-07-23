@@ -54,7 +54,8 @@ setup(
             'turtlebot3_robot_video = turtle3_project.turtlebot3_robot_video:main',
             'turtlebot3_sim_video = turtle3_project.turtlebot3_sim_video:main',
             'logic_flow = turtle3_project.logic_flow:main',
-            'smart_farm_manager = turtle3_project.smart_farm_manager:main',
+            'smart_farm_manager_real = turtle3_project.smart_farm_manager_real:main',
+            'smart_farm_manager_simul = turtle3_project.smart_farm_manager_simul:main',
             'follow_yolo_node = turtle3_project.follow_yolo_node:main',
             'fake_battery = turtle3_project.fake_battery:main',
             
