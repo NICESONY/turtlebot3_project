@@ -197,19 +197,19 @@ class PatrolNode(Node):
             wp = (x, y, yaw_deg)
             self._send_goal_list(wp, "▶ Stop")
 
-        """
-        elif self.mode == 4:
-            self.goal_queue.clear()
-            x = self.current_pose.position.x
-            y = self.current_pose.position.y
-            # yaw 추출
-            q = self.current_pose.orientation
-            yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
-            yaw_deg = math.degrees(yaw)
-            wp = (x, y, yaw_deg)
-            self._send_goal_list(wp, "▶ Stop")
-            # self.follow_pub.publish(Bool(data=True))
-        """
+        
+        # elif self.mode == 4:
+        #     self.goal_queue.clear()
+        #     x = self.current_pose.position.x
+        #     y = self.current_pose.position.y
+        #     # yaw 추출
+        #     q = self.current_pose.orientation
+        #     yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
+        #     yaw_deg = math.degrees(yaw)
+        #     wp = (x, y, yaw_deg)
+        #     self._send_goal_list(wp, "▶ Stop")
+        #     # self.follow_pub.publish(Bool(data=True))
+        
 
         elif self.mode == 4:
             # self.follow_pub.publish(Bool(data=False))
