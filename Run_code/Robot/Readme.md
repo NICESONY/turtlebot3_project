@@ -4,7 +4,7 @@
 
 ```
 ros2 launch turtlebot3_bringup robot.launch.py
-ros2 launch turtlebot3_bringup turtlebot3_state_publisher.launch.py 
+ros2 launch turtlebot3_bringup turtlebot3_state_publisher.launch.py
 ```
 
 
@@ -12,13 +12,18 @@ ros2 launch turtlebot3_bringup turtlebot3_state_publisher.launch.py
 ##  run computer (slam)
 
 ```
+ros2 run my_turtlebot_pkg test_web
+
 ros2 launch turtlebot3_navigation2 smart_farm_navigation2.launch.py 
-ros2 run turtle3_project smart_farm_manager_real
+ros2 run turtle3_project smart_farm_manager_real_web
 ```
 
 ##  run computer (vision)
 
 ```
+
+ros2 run my_turtlebot_pkg test_web
+
 ros2 launch yolo_follower follow_yolo.launch.py
 ros2 run rqt_image_view rqt_image_view
 ```
