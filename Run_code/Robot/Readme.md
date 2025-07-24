@@ -15,7 +15,7 @@ ros2 launch turtlebot3_bringup turtlebot3_state_publisher.launch.py
 ros2 run my_turtlebot_pkg test_web
 
 ros2 launch turtlebot3_navigation2 smart_farm_navigation2.launch.py 
-ros2 run turtle3_project smart_farm_manager_real_web
+ros2 run turtle3_project smart_farm_manager_real_web_test 
 ```
 
 ##  run computer (vision)
