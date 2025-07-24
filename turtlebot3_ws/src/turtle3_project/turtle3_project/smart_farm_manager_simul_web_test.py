@@ -77,9 +77,6 @@ WAYPOINTS = [
     [-1.39, -1.23, 180], ## 1
     [-1.46, -3.35, 0.00], ## 2
     [-1.48, -5.41, 0.00], ## 3
-    [ 1.74, -5.38, 0.00], ## 4
-    [ 1.71, -3.31, 0.00], ## 5
-    [ 1.69, -1.16, 0.00], ## 6
     [ 2.94, -6.68, 90], ## 수화물 내리는 곳
 ]
 # ----------------------------------------
@@ -196,7 +193,7 @@ class PatrolNode(Node):
             self._send_goal_list(wp, "▶ Stop")
 
         elif self.mode == 4:
-            for wp_idx in range(7):
+            for wp_idx in range(len(WAYPOINTS)):
                 wp = WAYPOINTS[wp_idx]
                 self.goal_queue.append(wp)
                 self.get_logger().info(f'큐에 goal 추가: {wp} (현재 큐 길이={len(self.goal_queue)})')
