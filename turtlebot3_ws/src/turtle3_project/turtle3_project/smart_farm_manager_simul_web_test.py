@@ -45,7 +45,7 @@ Patrol + Low-battery docking (ROS 2 Humble)
 
 import math
 from collections import deque
-
+import time
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
@@ -210,8 +210,6 @@ class PatrolNode(Node):
                 time.sleep(10)
                 self.low_batt_sent = False
                 self.try_send_next_goal()
-
-    def follow_robot(self):
 
 
     def cmd_vel_cb(self, msg: Twist):
