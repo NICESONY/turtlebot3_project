@@ -1,0 +1,124 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.0.6">
+  <diagram name="Web-Controller-Service Flow" id="a6IcZU44em814IcXLOJ8">
+    <mxGraphModel dx="932" dy="712" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-1" value="------- 1. 데이터 송신 (DB → Web) -------" style="swimlane;fontSize=16;fontStyle=1;horizontal=1;childLayout=stackLayout;rounded=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="175" width="720" height="343" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-2" value="DB" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-1">
+          <mxGeometry y="23" width="90" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-3" value="Repository" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-1">
+          <mxGeometry x="90" y="23" width="110" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-4" value="Service" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-1">
+          <mxGeometry x="200" y="23" width="100" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-5" value="Controller" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-1">
+          <mxGeometry x="300" y="23" width="110" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-6" value="Web" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-1">
+          <mxGeometry x="410" y="23" width="90" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-7" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-1" source="kFFMyz97cDrMyY59dg7Y-2" target="kFFMyz97cDrMyY59dg7Y-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-8" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-1" source="kFFMyz97cDrMyY59dg7Y-3" target="kFFMyz97cDrMyY59dg7Y-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-9" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-1" source="kFFMyz97cDrMyY59dg7Y-4" target="kFFMyz97cDrMyY59dg7Y-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-10" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-1" source="kFFMyz97cDrMyY59dg7Y-5" target="kFFMyz97cDrMyY59dg7Y-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-11" value="pointDTO → outputDTO → JSON" style="shape=note;whiteSpace=wrap;html=1;size=16;fillColor=#fff2cc;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-1">
+          <mxGeometry x="500" y="23" width="220" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-12" value="------- 2. 데이터 수신 (WebSocket → DB 저장) -------" style="swimlane;fontSize=16;fontStyle=1;horizontal=1;childLayout=stackLayout;rounded=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="240" y="565" width="830" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-13" value="Web (WebSocket)" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-12">
+          <mxGeometry y="23" width="140" height="337" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-14" value="WebSocket Handler" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-12">
+          <mxGeometry x="140" y="23" width="150" height="337" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-15" value="Service" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-12">
+          <mxGeometry x="290" y="23" width="100" height="337" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-16" value="Repository" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-12">
+          <mxGeometry x="390" y="23" width="110" height="337" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-17" value="DB" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-12">
+          <mxGeometry x="500" y="23" width="90" height="337" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-18" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-12" source="kFFMyz97cDrMyY59dg7Y-13" target="kFFMyz97cDrMyY59dg7Y-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-19" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-12" source="kFFMyz97cDrMyY59dg7Y-14" target="kFFMyz97cDrMyY59dg7Y-15">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="85" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-20" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-12" source="kFFMyz97cDrMyY59dg7Y-15" target="kFFMyz97cDrMyY59dg7Y-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-21" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-12" source="kFFMyz97cDrMyY59dg7Y-16" target="kFFMyz97cDrMyY59dg7Y-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-22" value="String(JSON) → inputDTO → Entity → DB" style="shape=note;whiteSpace=wrap;html=1;size=16;fillColor=#d5e8d4;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-12">
+          <mxGeometry x="590" y="23" width="240" height="337" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-23" value="------- 3. 화면 출력 (GET 요청) -------" style="swimlane;fontSize=16;fontStyle=1;horizontal=1;childLayout=stackLayout;rounded=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="170" width="1110" height="753" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-24" value="Web (GET)" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-23">
+          <mxGeometry y="23" width="120" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-25" value="Controller" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-23">
+          <mxGeometry x="120" y="23" width="150" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-26" value="Service" style="shape=process;rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-23">
+          <mxGeometry x="270" y="23" width="120" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-27" value="InputDTO → String → JSON" style="shape=note;whiteSpace=wrap;html=1;size=16;fillColor=#e1d5e7;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-23">
+          <mxGeometry x="390" y="23" width="290" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-28" value="row != null ?" style="shape=rhombus;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-23">
+          <mxGeometry x="680" y="23" width="150" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-29" value="return row" style="shape=process;rounded=1;whiteSpace=wrap;html=1;fillColor=#daf0ff;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-23">
+          <mxGeometry x="830" y="23" width="140" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-30" value="return null" style="shape=process;rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;" vertex="1" parent="kFFMyz97cDrMyY59dg7Y-23">
+          <mxGeometry x="970" y="23" width="140" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-31" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-23" source="kFFMyz97cDrMyY59dg7Y-24" target="kFFMyz97cDrMyY59dg7Y-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-32" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-23" source="kFFMyz97cDrMyY59dg7Y-25" target="kFFMyz97cDrMyY59dg7Y-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-33" style="endArrow=open;dashed=1;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-23" source="kFFMyz97cDrMyY59dg7Y-26" target="kFFMyz97cDrMyY59dg7Y-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-34" style="endArrow=block;rounded=1;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-23" source="kFFMyz97cDrMyY59dg7Y-27" target="kFFMyz97cDrMyY59dg7Y-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-35" value="Yes" style="endArrow=block;rounded=1;edgeStyle=elbowEdgeStyle;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-23" source="kFFMyz97cDrMyY59dg7Y-28" target="kFFMyz97cDrMyY59dg7Y-29">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="305" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kFFMyz97cDrMyY59dg7Y-36" value="No" style="endArrow=block;rounded=1;edgeStyle=elbowEdgeStyle;" edge="1" parent="kFFMyz97cDrMyY59dg7Y-23" source="kFFMyz97cDrMyY59dg7Y-28" target="kFFMyz97cDrMyY59dg7Y-30">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="470" y="305" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
