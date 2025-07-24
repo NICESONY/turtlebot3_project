@@ -61,7 +61,7 @@ from my_custom_msgs.msg import WebInput, WebOutput   # WebOutput을 "현재 상�
 
 # ---------------- Params ----------------
 DOCK_POSE = {'x':  0.69, 'y': -2.26, 'yaw_deg': 180}  # 충전 스테이션 위치
-LOW_BATT_PCT = 30.0                                   # 임계 퍼센트(%)
+LOW_BATT_PCT = 29.0                                   # 임계 퍼센트(%)
 
 INIT_X, INIT_Y, INIT_YAW = 0.0, 0.0, 0.0               # 초기 AMCL pose (끄고 싶으면 USE_INIT_POSE=False)
 USE_INIT_POSE = True
@@ -176,8 +176,6 @@ class PatrolNode(Node):
                 self.low_batt_sent = False
                 self.try_send_next_goal()
 
-            self.drop_pub.publish(Bool(data=True))
-
         elif self.mode == 2:
             # self.follow_pub.publish(Bool(data=False))
             self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
@@ -228,7 +226,7 @@ class PatrolNode(Node):
                 self.low_batt_sent = False
                 self.try_send_next_goal()
 
-            self.drop_pub.publish(Bool(data=True))
+            #self.drop_pub.publish(Bool(data=True))
 
     def cmd_vel_cb(self, msg: Twist):
         self.get_logger().info(
@@ -323,6 +321,8 @@ class PatrolNode(Node):
         status = future.result().status
         if status == GoalStatus.STATUS_SUCCEEDED:
             self.get_logger().info('✓ Goal 성공')
+            if self.mode == 1:
+                self.drop_pub.publish(Bool(data=True))  # 모드 1일 때는 팔로우 모드로 전환
         else:
             self.get_logger().warn(f'✗ Goal 실패 (status={status})')
 
