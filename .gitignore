@@ -210,4 +210,8 @@ __marimo__/
 turtlebot3_ws/build/
 turtlebot3_ws/install/
 turtlebot3_ws/log/
-
+web/build
+web/install/
+web/log/
+log/
+install/
