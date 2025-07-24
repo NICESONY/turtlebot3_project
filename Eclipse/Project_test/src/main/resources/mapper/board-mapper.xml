@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board">
+	<!-- 로그 작성 -->
+	<insert id="writeLog" parameterType="inputDTO">
+		INSERT INTO	turtlebot	(time, 
+								id,
+								x,
+								y,
+								yaw_deg,
+								`mod`,
+								batt)
+			 		   VALUES	(#{time},
+				  				#{id},
+				  				#{x},
+				  				#{y},
+				  				#{yaw_deg},
+				  				#{mod},
+				  				#{batt})
+	</insert>
+	
+	<!-- 가상 포인트 가져오기 -->
+	<select id="findVPoint" parameterType="int" resultType="pointDTO">
+		SELECT	*
+		  FROM	v_point 
+	  	 WHERE	pointid = #{id}
+	</select>
+	
+	<!-- 현실 포인트 가져오기 -->
+	<select id="findRPoint" parameterType="int" resultType="pointDTO">
+		SELECT	*
+		  FROM	r_point 
+	  	 WHERE	pointid = #{id}
+	</select>
+</mapper>
