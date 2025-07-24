@@ -231,7 +231,7 @@ class PatrolNode(Node):
         out.y = y
         out.yaw_deg = yaw_deg
         out.id = 0  # 예시 ID, 필요에 따라 변경  
-        out.mod = 0  # 예시 모드, 필요에 따라 변경
+        out.mod = self.mode  # 예시 모드, 필요에 따라 변경
         out.batt = int(self.batt_pct)
         self.pose_simple_pub.publish(out)
 
