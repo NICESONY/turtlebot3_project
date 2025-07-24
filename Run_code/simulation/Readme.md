@@ -10,6 +10,8 @@ ros2 launch turtlebot3_navigation2 smart_farm_navigation2_simul.launch.py use_si
 
 ros2 run my_turtlebot_pkg test_web
 
+http://192.168.0.102:8080/
+
 ros2 run turtle3_project smart_farm_manager_simul
 
 
