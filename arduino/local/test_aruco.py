@@ -31,6 +31,7 @@ class CropHarvestNode(Node):
             Twist,
             '/cmd_vel',
             10)
+        self.create_subscription(Bool, '/drop', self.drop_cm, 10)
         self.servo_client = self.create_client(Trigger, 'servo_control')
 
         # 카메라 캘리브레이션
@@ -49,25 +50,30 @@ class CropHarvestNode(Node):
         self.processing = False
         self.harvest_to_drop = {1: 10, 2: 9, 3: 8}
         self.current_harvest_id = 1
+        self.drop_mod = False
 
         self.threshold_cm = 20.0
         self.approach_speed = 0.05
         self.max_angular = math.pi * 0.2
 
     def cb_image(self, msg: CompressedImage):
-        arr = np.frombuffer(msg.data, np.uint8)
-        frame = cv2.imdecode(arr, cv2.IMREAD_COLOR)
-        if frame is None:
-            return
-        annotated = self.annotate_and_control(frame)
-        ret, buf = cv2.imencode('.jpg', annotated, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
-        if not ret:
-            return
-        out = CompressedImage()
-        out.header = msg.header
-        out.format = 'jpeg'
-        out.data = buf.tobytes()
-        self.pub_img.publish(out)
+        if self.drop_mod:
+            self.drop_mod = False
+            arr = np.frombuffer(msg.data, np.uint8)
+            frame = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+            if frame is None:
+                return
+            annotated = self.annotate_and_control(frame)
+            ret, buf = cv2.imencode('.jpg', annotated, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
+            if not ret:
+                return
+            out = CompressedImage()
+            out.header = msg.header
+            out.format = 'jpeg'
+            out.data = buf.tobytes()
+            self.pub_img.publish(out)
+        else:
+            pass
 
     def annotate_and_control(self, frame):
         h, w = frame.shape[:2]
@@ -198,6 +204,8 @@ class CropHarvestNode(Node):
     def stop(self):
         self.cmd_pub.publish(Twist())
 
+    def drop_cm(self, msg):
+        self.drop_mod = msg
 
 def main(args=None):
     rclpy.init(args=args)
