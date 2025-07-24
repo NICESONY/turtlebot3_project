@@ -134,7 +134,11 @@ class PatrolNode(Node):
         msg.header.frame_id = 'map'
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.pose.pose.position.x = INIT_X
+        self.get_logger().info(f'Pose X: {msg.pose.pose.position.x} 완료')
+
         msg.pose.pose.position.y = INIT_Y
+        self.get_logger().info(f'Pose Y: {msg.pose.pose.position.y} 완료')
+
         msg.pose.pose.orientation = quat_from_yaw(INIT_YAW)
         msg.pose.covariance[0] = msg.pose.covariance[7] = 0.25 ** 2
         msg.pose.covariance[35] = math.radians(10) ** 2
@@ -168,7 +172,7 @@ class PatrolNode(Node):
             if not self.goal_active:
                 self.try_send_next_goal()
             else:
-                time.sleep(10)
+                # time.sleep(10)
                 self.low_batt_sent = False
                 self.try_send_next_goal()
 
@@ -220,7 +224,7 @@ class PatrolNode(Node):
             if not self.goal_active:
                 self.try_send_next_goal()
             else:
-                time.sleep(10)
+                # time.sleep(10)
                 self.low_batt_sent = False
                 self.try_send_next_goal()
 
@@ -272,7 +276,7 @@ class PatrolNode(Node):
         if not self.low_batt_sent:  # 충전 중/대기 중이 아니면
             self.try_send_next_goal()
         else:
-            time.sleep(10)
+            # time.sleep(10)
             self.low_batt_sent = False
             self.try_send_next_goal()
 
@@ -328,7 +332,7 @@ class PatrolNode(Node):
         if not self.low_batt_sent:
             self.try_send_next_goal()
         else:
-            time.sleep(10)
+            # time.sleep(10)
             self.low_batt_sent = False
             self.try_send_next_goal()
 
