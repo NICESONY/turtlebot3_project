@@ -140,7 +140,8 @@ class PatrolNode(Node):
         msg.pose.covariance[0] = msg.pose.covariance[7] = 0.25 ** 2
         msg.pose.covariance[35] = math.radians(10) ** 2
 
-        for _ in range(INIT_POSE_PUB_COUNT):
+        for i in range(INIT_POSE_PUB_COUNT):
+            self.get_logger().info(f'{i}')
             self.init_pub.publish(msg)
 
         self.get_logger().info('📍 초기 pose 발행 완료')
