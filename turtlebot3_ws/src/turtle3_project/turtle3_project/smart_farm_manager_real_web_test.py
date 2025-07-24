@@ -95,10 +95,9 @@ class PatrolNode(Node):
         self.low_battery_pub = self.create_publisher(Bool, '/battery_low', 10)
         self.pose_simple_pub = self.create_publisher(WebOutput, CURRENT_POSE_TOPIC, 10)
         self.queue_info_pub = self.create_publisher(Bool, QUEUE_INFO_TOPIC, 10)  # Bool가 아니라면 std_msgs/String 권장
-        self.follow_pub = self.create_publisher(Bool, '/follow_mod', 10)
+        # self.follow_pub = self.create_publisher(Bool, '/follow_mod', 10)
         self.drop_pub = self.create_publisher(Bool, '/drop', 10)
-        self.true = True
-        self.false = False
+
         self.create_subscription(PoseWithCovarianceStamped, '/amcl_pose', self.pose_cb, 10)
         self.create_subscription(BatteryState, '/battery_state', self.batt_cb, 10)
         self.create_subscription(WebInput, '/input_data_web', self.enqueue_goal_cb, 10)
@@ -157,7 +156,7 @@ class PatrolNode(Node):
     def enqueue_goal_cb(self, msg: WebInput):
         self.mode = msg.mod
         if self.mode == 1:
-            self.follow_pub.publish(Bool(data=False))
+            # self.follow_pub.publish(Bool(data=False))
             """웹에서 들어온 좌표를 queue에 저장"""
             wp = (msg.x, msg.y, msg.yaw_deg)
             self.goal_queue.append(wp)
@@ -173,15 +172,17 @@ class PatrolNode(Node):
                 self.low_batt_sent = False
                 self.try_send_next_goal()
 
+            self.drop_pub.publish(Bool(data=True))
+
         elif self.mode == 2:
-            self.follow_pub.publish(Bool(data=False))
+            # self.follow_pub.publish(Bool(data=False))
             self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
             self.low_battery_pub.publish(Bool(data=True))
             self.low_batt_sent = True
             self.send_specific_goal(DOCK_POSE)
 
         elif self.mode == 3:
-            self.follow_pub.publish(Bool(data=False))
+            # self.follow_pub.publish(Bool(data=False))
             self.goal_queue.clear()
             x = self.current_pose.position.x
             y = self.current_pose.position.y
@@ -192,6 +193,7 @@ class PatrolNode(Node):
             wp = (x, y, yaw_deg)
             self._send_goal_list(wp, "▶ Stop")
 
+        """
         elif self.mode == 4:
             self.goal_queue.clear()
             x = self.current_pose.position.x
@@ -202,10 +204,11 @@ class PatrolNode(Node):
             yaw_deg = math.degrees(yaw)
             wp = (x, y, yaw_deg)
             self._send_goal_list(wp, "▶ Stop")
-            self.follow_pub.publish(Bool(data=True))
+            # self.follow_pub.publish(Bool(data=True))
+        """
 
-        elif self.mode == 5:
-            self.follow_pub.publish(Bool(data=False))
+        elif self.mode == 4:
+            # self.follow_pub.publish(Bool(data=False))
             """웹에서 들어온 좌표를 queue에 저장"""
             wp = (msg.x, msg.y, msg.yaw_deg)
             self.goal_queue.append(wp)
@@ -258,7 +261,7 @@ class PatrolNode(Node):
         # 배터리 체크 -> 도킹
         if (self.batt_pct <= LOW_BATT_PCT) and (not self.low_batt_sent):
             self.mode = 2
-            self.follow_pub.publish(Bool(data=False))
+            # self.follow_pub.publish(Bool(data=False))
             self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
             self.low_battery_pub.publish(Bool(data=True))
             self.low_batt_sent = True
