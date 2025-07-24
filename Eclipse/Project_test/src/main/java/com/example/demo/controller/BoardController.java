@@ -31,10 +31,29 @@ public class BoardController {
 		PointDTO pointDTO = boardService.findVPoint(id);
 		OutputDTO outputDTO = new OutputDTO();
 		outputDTO.setId(0);
-		outputDTO.setX(pointDTO.getX());
-		outputDTO.setY(pointDTO.getY());
-		outputDTO.setYaw_deg(pointDTO.getYaw_deg());
-		outputDTO.setMod(1);
+		if(id == 0) {
+			outputDTO.setX(pointDTO.getX());
+			outputDTO.setY(pointDTO.getY());
+			outputDTO.setYaw_deg(pointDTO.getYaw_deg());
+			outputDTO.setMod(2);
+		} else if(id == 9) {
+			InputDTO i = boardService.getLog();
+			outputDTO.setX(i.getX());
+			outputDTO.setY(i.getY());
+			outputDTO.setYaw_deg(i.getYaw_deg());
+			outputDTO.setMod(3);
+		} else if(id == 10) {
+			InputDTO i = boardService.getLog();
+			outputDTO.setX(i.getX());
+			outputDTO.setY(i.getY());
+			outputDTO.setYaw_deg(i.getYaw_deg());
+			outputDTO.setMod(4);
+		} else {
+			outputDTO.setX(pointDTO.getX());
+			outputDTO.setY(pointDTO.getY());
+			outputDTO.setYaw_deg(pointDTO.getYaw_deg());
+			outputDTO.setMod(1);
+		}
 		Map<String, Object> data = new HashMap<>();
 		data.put("id", outputDTO.getId());
 		data.put("x", outputDTO.getX());
@@ -56,10 +75,29 @@ public class BoardController {
 		PointDTO pointDTO = boardService.findRPoint(id);
 		OutputDTO outputDTO = new OutputDTO();
 		outputDTO.setId(0);
-		outputDTO.setX(pointDTO.getX());
-		outputDTO.setY(pointDTO.getY());
-		outputDTO.setYaw_deg(pointDTO.getYaw_deg());
-		outputDTO.setMod(1);
+		if(id == 0) {
+			outputDTO.setX(pointDTO.getX());
+			outputDTO.setY(pointDTO.getY());
+			outputDTO.setYaw_deg(pointDTO.getYaw_deg());
+			outputDTO.setMod(2);
+		} else if(id == 9) {
+			InputDTO i = boardService.getLog();
+			outputDTO.setX(i.getX());
+			outputDTO.setY(i.getY());
+			outputDTO.setYaw_deg(i.getYaw_deg());
+			outputDTO.setMod(3);
+		} else if(id == 10) {
+			InputDTO i = boardService.getLog();
+			outputDTO.setX(i.getX());
+			outputDTO.setY(i.getY());
+			outputDTO.setYaw_deg(i.getYaw_deg());
+			outputDTO.setMod(4);
+		} else {
+			outputDTO.setX(pointDTO.getX());
+			outputDTO.setY(pointDTO.getY());
+			outputDTO.setYaw_deg(pointDTO.getYaw_deg());
+			outputDTO.setMod(1);
+		}
 		Map<String, Object> data = new HashMap<>();
 		data.put("id", outputDTO.getId());
 		data.put("x", outputDTO.getX());

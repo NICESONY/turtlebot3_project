@@ -89,6 +89,10 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				inputDTO.setMod("Stop");
 				break;
 			}
+			case 4:{
+				inputDTO.setMod("follow");
+				break;
+			}
 			default: {
 				inputDTO.setMod("Error");
 			}}
