@@ -67,7 +67,7 @@ INIT_X, INIT_Y, INIT_YAW = 0.0, 0.0, 0.0               # 초기 AMCL pose (끄�
 USE_INIT_POSE = True
 INIT_POSE_PUB_COUNT = 2                                # 몇 번 쏠지
 
-POSE_PUB_PERIOD = 1.0                                  # 현재 pose pub 주기(초)
+POSE_PUB_PERIOD = 0.5                                  # 현재 pose pub 주기(초)
 IDLE_CHECK_PERIOD = 0.5                                # goal 끝났는지 체크 주기
 
 CURRENT_POSE_TOPIC = '/robot_pose_xyyaw'               # 현재 pose pub 토픽
@@ -95,6 +95,7 @@ class PatrolNode(Node):
         self.low_battery_pub = self.create_publisher(Bool, '/battery_low', 10)
         self.pose_simple_pub = self.create_publisher(WebOutput, CURRENT_POSE_TOPIC, 10)
         self.queue_info_pub = self.create_publisher(Bool, QUEUE_INFO_TOPIC, 10)  # Bool가 아니라면 std_msgs/String 권장
+        self.follow_pub = self.create_publisher(Bool, '/follow_mod', 10)
 
         self.create_subscription(PoseWithCovarianceStamped, '/amcl_pose', self.pose_cb, 10)
         self.create_subscription(BatteryState, '/battery_state', self.batt_cb, 10)
@@ -119,6 +120,8 @@ class PatrolNode(Node):
         self.current_pose = None
         self.goal_active = False
 
+        self.mode = 0
+        
         self.batt_pct = 100.0
         self.low_batt_sent = False
 
@@ -149,16 +152,54 @@ class PatrolNode(Node):
         self.batt_pct = pct if pct > 1.0 else pct * 100.0
 
     def enqueue_goal_cb(self, msg: WebInput):
-        """웹에서 들어온 좌표를 queue에 저장"""
-        wp = (msg.x, msg.y, msg.yaw_deg)
-        self.goal_queue.append(wp)
-        self.get_logger().info(f'큐에 goal 추가: {wp} (현재 큐 길이={len(self.goal_queue)})')
-        # 큐 상태를 퍼블리시 (원하면 형식 바꾸세요)
-        self.queue_info_pub.publish(Bool(data=True))
+        self.mode = msg.mod
+        if self.mode == 1:
+            self.follow_pub.publish(False)
+            """웹에서 들어온 좌표를 queue에 저장"""
+            wp = (msg.x, msg.y, msg.yaw_deg)
+            self.goal_queue.append(wp)
+            self.get_logger().info(f'큐에 goal 추가: {wp} (현재 큐 길이={len(self.goal_queue)})')
+            # 큐 상태를 퍼블리시 (원하면 형식 바꾸세요)
+            self.queue_info_pub.publish(Bool(data=True))
 
-        # goal이 비활성 상태면 바로 처리 시도
-        if not self.goal_active:
-            self.try_send_next_goal()
+            # goal이 비활성 상태면 바로 처리 시도
+            if not self.goal_active:
+                self.try_send_next_goal()
+            else:
+                time.sleep(10)
+                self.low_batt_sent = False
+                self.try_send_next_goal()
+
+        elif self.mode == 2:
+            self.follow_pub.publish(False)
+            self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
+            self.low_battery_pub.publish(Bool(data=True))
+            self.low_batt_sent = True
+            self.send_specific_goal(DOCK_POSE)
+
+        elif self.mode == 3:
+            self.follow_pub.publish(False)
+            self.goal_queue.clear()
+            x = self.current_pose.position.x
+            y = self.current_pose.position.y
+            # yaw 추출
+            q = self.current_pose.orientation
+            yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
+            yaw_deg = math.degrees(yaw)
+            wp = (x, y, yaw_deg)
+            self._send_goal_list(wp, "▶ Stop")
+
+        elif self.mode == 4
+            self.goal_queue.clear()
+            x = self.current_pose.position.x
+            y = self.current_pose.position.y
+            # yaw 추출
+            q = self.current_pose.orientation
+            yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
+            yaw_deg = math.degrees(yaw)
+            wp = (x, y, yaw_deg)
+            self._send_goal_list(wp, "▶ Stop")
+            self.follow_pub.publish(True)
 
     def cmd_vel_cb(self, msg: Twist):
         self.get_logger().info(
@@ -167,7 +208,7 @@ class PatrolNode(Node):
         )
 
     def publish_current_pose(self):
-        """현재 위치를 1초마다 pub"""
+        """현재 위치를 0.5초마다 pub"""
         if self.current_pose is None:
             return
         x = self.current_pose.position.x
@@ -182,7 +223,7 @@ class PatrolNode(Node):
         out.y = y
         out.yaw_deg = yaw_deg
         out.id = 0  # 예시 ID, 필요에 따라 변경  
-        out.mod = 0  # 예시 모드, 필요에 따라 변경
+        out.mod = self.mode  # 예시 모드, 필요에 따라 변경
         out.batt = int(self.batt_pct)
         self.pose_simple_pub.publish(out)
 
@@ -194,6 +235,8 @@ class PatrolNode(Node):
 
         # 배터리 체크 -> 도킹
         if (self.batt_pct <= LOW_BATT_PCT) and (not self.low_batt_sent):
+            self.mode = 2
+            self.follow_pub.publish(False)
             self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
             self.low_battery_pub.publish(Bool(data=True))
             self.low_batt_sent = True
@@ -202,6 +245,10 @@ class PatrolNode(Node):
 
         # 평상시: 큐에 목표가 있으면 다음거 보냄, 없으면 그냥 대기
         if not self.low_batt_sent:  # 충전 중/대기 중이 아니면
+            self.try_send_next_goal()
+        else:
+            time.sleep(10)
+            self.low_batt_sent = False
             self.try_send_next_goal()
 
     # -------- goal helpers --------
@@ -255,7 +302,10 @@ class PatrolNode(Node):
         # 도킹이 아닌 경우라면 다음 목표 시도
         if not self.low_batt_sent:
             self.try_send_next_goal()
-        # 도킹 후에는 여기서 충전 완료 이벤트를 기다리도록 설계 가능
+        else:
+            time.sleep(10)
+            self.low_batt_sent = False
+            self.try_send_next_goal()
 
 def main():
     rclpy.init()
