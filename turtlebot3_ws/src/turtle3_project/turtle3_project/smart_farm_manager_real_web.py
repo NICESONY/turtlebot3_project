@@ -128,8 +128,10 @@ class PatrolNode(Node):
     def publish_initial_pose(self):
         msg = PoseWithCovarianceStamped()
         msg.header.frame_id = 'map'
+        
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.pose.pose.position.x = INIT_X
+        self.get_logger().info(f'Pose X: {msg.pose.pose.position.x} 완료')
         msg.pose.pose.position.y = INIT_Y
         msg.pose.pose.orientation = quat_from_yaw(INIT_YAW)
         msg.pose.covariance[0] = msg.pose.covariance[7] = 0.25 ** 2

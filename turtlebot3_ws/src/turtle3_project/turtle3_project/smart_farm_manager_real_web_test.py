@@ -45,7 +45,7 @@ Patrol + Low-battery docking (ROS 2 Humble)
 
 import math
 from collections import deque
-
+import time
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
@@ -65,7 +65,7 @@ LOW_BATT_PCT = 30.0                                   # 임계 퍼센트(%)
 
 INIT_X, INIT_Y, INIT_YAW = 0.0, 0.0, 0.0               # 초기 AMCL pose (끄고 싶으면 USE_INIT_POSE=False)
 USE_INIT_POSE = True
-INIT_POSE_PUB_COUNT = 2                                # 몇 번 쏠지
+INIT_POSE_PUB_COUNT = 10                                # 몇 번 쏠지
 
 POSE_PUB_PERIOD = 0.5                                  # 현재 pose pub 주기(초)
 IDLE_CHECK_PERIOD = 0.5                                # goal 끝났는지 체크 주기
@@ -96,7 +96,9 @@ class PatrolNode(Node):
         self.pose_simple_pub = self.create_publisher(WebOutput, CURRENT_POSE_TOPIC, 10)
         self.queue_info_pub = self.create_publisher(Bool, QUEUE_INFO_TOPIC, 10)  # Bool가 아니라면 std_msgs/String 권장
         self.follow_pub = self.create_publisher(Bool, '/follow_mod', 10)
-
+        self.drop_pub = self.create_publisher(Bool, '/drop', 10)
+        self.true = True
+        self.false = False
         self.create_subscription(PoseWithCovarianceStamped, '/amcl_pose', self.pose_cb, 10)
         self.create_subscription(BatteryState, '/battery_state', self.batt_cb, 10)
         self.create_subscription(WebInput, '/input_data_web', self.enqueue_goal_cb, 10)
@@ -154,7 +156,7 @@ class PatrolNode(Node):
     def enqueue_goal_cb(self, msg: WebInput):
         self.mode = msg.mod
         if self.mode == 1:
-            self.follow_pub.publish(False)
+            self.follow_pub.publish(Bool(data=False))
             """웹에서 들어온 좌표를 queue에 저장"""
             wp = (msg.x, msg.y, msg.yaw_deg)
             self.goal_queue.append(wp)
@@ -171,14 +173,14 @@ class PatrolNode(Node):
                 self.try_send_next_goal()
 
         elif self.mode == 2:
-            self.follow_pub.publish(False)
+            self.follow_pub.publish(Bool(data=False))
             self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
             self.low_battery_pub.publish(Bool(data=True))
             self.low_batt_sent = True
             self.send_specific_goal(DOCK_POSE)
 
         elif self.mode == 3:
-            self.follow_pub.publish(False)
+            self.follow_pub.publish(Bool(data=False))
             self.goal_queue.clear()
             x = self.current_pose.position.x
             y = self.current_pose.position.y
@@ -189,7 +191,7 @@ class PatrolNode(Node):
             wp = (x, y, yaw_deg)
             self._send_goal_list(wp, "▶ Stop")
 
-        elif self.mode == 4
+        elif self.mode == 4:
             self.goal_queue.clear()
             x = self.current_pose.position.x
             y = self.current_pose.position.y
@@ -199,7 +201,26 @@ class PatrolNode(Node):
             yaw_deg = math.degrees(yaw)
             wp = (x, y, yaw_deg)
             self._send_goal_list(wp, "▶ Stop")
-            self.follow_pub.publish(True)
+            self.follow_pub.publish(Bool(data=True))
+
+        elif self.mode == 5:
+            self.follow_pub.publish(Bool(data=False))
+            """웹에서 들어온 좌표를 queue에 저장"""
+            wp = (msg.x, msg.y, msg.yaw_deg)
+            self.goal_queue.append(wp)
+            self.get_logger().info(f'큐에 goal 추가: {wp} (현재 큐 길이={len(self.goal_queue)})')
+            # 큐 상태를 퍼블리시 (원하면 형식 바꾸세요)
+            self.queue_info_pub.publish(Bool(data=True))
+
+            # goal이 비활성 상태면 바로 처리 시도
+            if not self.goal_active:
+                self.try_send_next_goal()
+            else:
+                time.sleep(10)
+                self.low_batt_sent = False
+                self.try_send_next_goal()
+
+            self.drop_pub.publish(Bool(data=True))
 
     def cmd_vel_cb(self, msg: Twist):
         self.get_logger().info(
@@ -236,7 +257,7 @@ class PatrolNode(Node):
         # 배터리 체크 -> 도킹
         if (self.batt_pct <= LOW_BATT_PCT) and (not self.low_batt_sent):
             self.mode = 2
-            self.follow_pub.publish(False)
+            self.follow_pub.publish(Bool(data=False))
             self.get_logger().warn(f'배터리 {self.batt_pct:.1f}% ↓ → 도킹 지점 이동')
             self.low_battery_pub.publish(Bool(data=True))
             self.low_batt_sent = True
