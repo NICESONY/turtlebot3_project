@@ -82,18 +82,12 @@ sudo apt install ros-humble-cartographer ros-humble-cartographer-ros
 
 ## 📊 [Project github command list](https://github.com/NICESONY/turtlebot3_project/tree/main/git_commad)
 
-## pull request & code review & make branch and merge
 
 ## 🗺️ [map_image](https://github.com/NICESONY/turtlebot3_project/blob/main/Documentation/map_image/Readme.md)
 
 -------------
 ## 📊  [기술서](https://github.com/NICESONY/turtlebot3_project/blob/main/Documentation/Project_Technical_Specification/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EA%B8%B0%EC%88%A0%EC%84%9C_%EC%96%91%EC%8B%9D(%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8C%9C%20%EC%9E%90%EB%8F%99%20%EC%9A%B4%EC%86%A1%20%EB%A1%9C%EB%B4%87%20%EB%B0%8F%20%EC%B6%A9%EC%A0%84%20%EC%8A%A4%ED%85%8C%EC%9D%B4%EC%85%98%20%EC%97%B0%EA%B3%84%20%EC%8B%9C%EC%8A%A4%ED%85%9C).pdf)
 -------------
-
-## 🎯  폴더 설명 
-
-
-- 특정 폴더에 뭐가 들어있는지 설명하는 부분
 
 
 ## 🤖 [시연 영상](https://youtu.be/RD2XwL_64qI)
