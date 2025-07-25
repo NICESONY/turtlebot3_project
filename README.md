@@ -44,19 +44,18 @@
 ## 📅 구현할 기능 & 완료한 기능
 
 
- ### git clone 하는 방법
+## ⚙️ git clone 하는 방법
 ```
 
-## make git clone
-
-- open terminer
-- cd ~
-- mkdir project
-- cd project
-- git clone https://NICESONY:{tokenkey}@github.com/NICESONY/turtlebot3_project.git
-- code .
+open terminer
+cd ~
+mkdir project
+cd project
+git clone https://NICESONY:{tokenkey}@github.com/NICESONY/turtlebot3_project.git
+code .
 ```
 
+## ⚙️ install 
 ```
 sudo apt update
 sudo apt install \
@@ -73,11 +72,11 @@ sudo apt update
 sudo apt install ros-humble-cartographer ros-humble-cartographer-ros
 ```
 
-## [Project github command list](https://github.com/NICESONY/turtlebot3_project/tree/main/git_commad)
+## 📊 [Project github command list](https://github.com/NICESONY/turtlebot3_project/tree/main/git_commad)
 
 ## pull request & code review & make branch and merge
 
-# [map_image](https://github.com/NICESONY/turtlebot3_project/blob/main/Documentation/map_image/Readme.md)
+## 🗺️ [map_image](https://github.com/NICESONY/turtlebot3_project/blob/main/Documentation/map_image/Readme.md)
 
 
 -------------
