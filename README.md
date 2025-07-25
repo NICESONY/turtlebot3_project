@@ -47,6 +47,11 @@ cd ~
 mkdir project
 cd project
 git clone https://NICESONY:{tokenkey}@github.com/NICESONY/turtlebot3_project.git
+cd turtlebot3_project
+git add .
+git commit -m "initial_commit"
+git push
+
 code .
 ```
 
