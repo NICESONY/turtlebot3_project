@@ -71,7 +71,7 @@ sudo apt install ros-humble-cartographer ros-humble-cartographer-ros
 ## 🎯  여기부터 디버깅 완벽히 잡고 스프링 이관 설치
 
 - 새로운 환경에서 스프링 서버 및 ros 연계
-- git clone 후 swpan 여러개 생기는 문제 해결 필요
+- git clone 후 spwan 여러개 생기는 문제 해결 필요
 - 서버 DB 테이블 다른 것 만들어 볼 것
 
 
