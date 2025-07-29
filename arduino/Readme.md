@@ -38,10 +38,8 @@ ros2 run aruco_detector_pkg test_aruco
 ```
 
 
-## do you want to show image/?????????
-
+## do you want to show image
 
 ```
 rqt
-
 ```
