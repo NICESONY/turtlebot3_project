@@ -1,6 +1,3 @@
-Sure! Here's the English version of your project summary:
-
----
 
 # 🚜 Smart Farm Transport Robot
 
