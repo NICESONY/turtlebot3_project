@@ -1,41 +1,41 @@
+Sure! Here's the English version of your project summary:
+
+---
+
 # 🚜 Smart Farm Transport Robot
 
+### 🗓️ Project Duration: 2025/07/21 \~ 2025/07/25
+
+## 🎯 Topic: Smart Farm Autonomous Transport Robot and Charging Station Integration System
+
+### 🤖 Key Features: Radir SLAM, NAV2, Vision, Gazebo
+
+1. Automatically moves to the charging zone when the battery falls below a certain level
+2. Moves to a designated zone upon a click from the web interface
+3. Autonomous harvesting mode activated via web click (follows a person and assists with harvesting)
+4. Moves to a specific location and transfers harvested crops to a designated box
+
+   #### Extra Feature:
+
+   * When using two or more TurtleBots, the system automatically arranges tasks based on which robot is available for transport
+
+### 👥 Team Members: Kunhee Son, Hyunjun Park, Jinwoo Park, Jungmi Kwak
 
 
-### 🗓️ 프로젝트 기간 : 2025/07/21 ~ 2025/07/25
+
+## 📅 [Project Schedule](https://github.com/NICESONY/turtlebot3_project/tree/main/Documentation/plan)
 
 
-
-## 🎯 주제 : 스마트팜 자동 운송 로봇 및 충전 스테이션 연계 시스템 
-
+## ❓ Q & A
 
 
-### 🤖 주요 기능 : Radir SLAM, NAV2, Vision, Gazebo, 
-
-- 1. 특정 베터리 이하일 경우 충전 구역으로 이동 
-- 2. 웹에서 클릭시 특정 구역으로 이동 
-- 3. 웹에서 클릭 시 자율 수확 모드(사람을 따라다니면서 수확 진행) 
-- 4. 특정 장소로 이동해서 수확물 특정 박스에 옮기기
-  #### 번외
-- 2개 이상의 터틀봇 이용해서 다른 로봇이 옮기면 알아서 자동으로 배치
-
-  
-### 👥 팀구성 : 손건희, 박현준, 박진우, 곽정미
-
-
-## 📅 [프로젝트 일정](https://github.com/NICESONY/turtlebot3_project/tree/main/Documentation/plan)
-
-
-## ❓ 질문사항
-
-
-### 🗓️ 서류 링크
+### 🗓️ Document Links
 
 - [계획서](https://docs.google.com/document/d/1M6PhMZ9piBhJVs8vatvDK25QiM19CuVPqjAv2bpU3-8/edit?tab=t.0)
 - [PPT](https://docs.google.com/presentation/d/1NAYQ3nXiv2y0jL_QtZ-ypov38d0UsTY2KapHy4Q52Sg/edit?slide=id.g370cc601211_0_15#slide=id.g370cc601211_0_15)
 
 
-## ⚙️ git clone 하는 방법
+## ⚙️ git clone 
 ```
 
 open terminer
@@ -86,4 +86,4 @@ sudo apt install ros-humble-cartographer ros-humble-cartographer-ros
 -------------
 
 
-## 🤖 [시연 영상](https://youtu.be/RD2XwL_64qI)
+## 🤖 [Youtube Video](https://youtu.be/RD2XwL_64qI)
